@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>ScafGamez</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #2e2e3f;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .answer-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #444;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .answer-button:hover {
+      background-color: #666;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="quiz-container">
+    <h1>Wilkommen bei den ScafGamez🎮!!!</h1>
+    <div id="question-container"></div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Auf welcher höhe findet man in Minecraft am besten diamanten?",
+        answers: ["16", "-35", "-59", "-11"],
+        correct: 2
+      },
+      {
+        question: "Was droppt ein Creeper wenn, er von einem Skelett getötet wird?",
+        answers: ["Schallplatte", "Creeperkopf", "Sprengpfeile", "Creeper Banner-Pattern"],
+        correct: 0
+      },
+      {
+        question: "Welches dieser Passiven Mobs kann durch einen Blitz in eine feindliche Variante verwandelt werden?",
+        answers: ["Pilzkuh", "Dorfbewohner", "Schwein", "Ozelot"],
+        correct: 1
+      },
+      {
+        question: "Wo Spielt GTA V?",
+        answers: ["Los Santos", "Vice City", "San Andreas", "Liberty City"],
+        correct: 0
+      },
+      {
+        question: "Welche dieser Personen ist kein Spielbarer GTA V-Story Mode Character?",
+        answers: ["Trevor", "Franklin", "Michael", "Lester"],
+        correct: 3
+      },
+      {
+        question: "Wie heißt Franklins Hund?",
+        answers: ["Spike", "Champ", "Max", "Chop"],
+        correct: 3
+      },
+      {
+        question: "Wie heißt der Helfer des Spielers in Sons of the Forest?",
+        answers: ["Melvin", "Kelvin", "Kevin", "Bob"],
+        correct: 1
+      },
+      {
+        question: "Wie gelangt man in Sons of the Forest an moderne Werkzeuge/Waffen?",
+        answers: ["Es gibt keine modernen Waffen/Werkzeuge", "Durch das Erkunden von Höhlen und Bunkern", "Nur durch Crafting", "Trading mit NPCs"],
+        correct: 1
+      },
+      {
+        question: "Welche Ressource ist im Sons of the Forest Early Game besonders wichtig um zu überleben??",
+        answers: ["Wasser und Nahrung", "Steine", "Munition", "Das Radio"],
+        correct: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionContainer = document.getElementById("question-container");
+    const resultContainer = document.getElementById("result");
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      questionContainer.innerHTML = `
+        <div class="question">${q.question}</div>
+        ${q.answers.map((answer, i) => `
+          <button class="answer-button" onclick="checkAnswer(${i})">${answer}</button>
+        `).join('')}
+      `;
+      resultContainer.innerText = "";
+    }
+
+    function checkAnswer(selectedIndex) {
+      const q = questions[currentQuestion];
+      if (selectedIndex === q.correct) {
+        score++;
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          showEndScreen();
+        }
+      } else {
+        resultContainer.innerText = "❌ Falsch! Versuch's nochmal.";
+      }
+    }
+
+    function showEndScreen() {
+      questionContainer.innerHTML = `
+        <h2>🎉 Du hast das Quiz beendet!</h2>
+        <p>Du hast ${score} von ${questions.length} Fragen richtig beantwortet.</p>
+      `;
+    }
+
+    // Start the quiz
+    showQuestion();
+  </script>
+
+</body>
+</html>
